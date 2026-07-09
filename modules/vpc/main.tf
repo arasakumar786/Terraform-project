@@ -1,6 +1,6 @@
 resource "aws_vpc" "test_vpc" {
-  cidr_block       = var.cidr_block
-  instance_tenancy = "default"
+  cidr_block           = var.cidr_block
+  instance_tenancy     = "default"
   enable_dns_support   = true
   enable_dns_hostnames = true
   tags = {
@@ -9,48 +9,48 @@ resource "aws_vpc" "test_vpc" {
 }
 
 resource "aws_subnet" "public_subnet_1" {
-  vpc_id     = aws_vpc.test_vpc.id
-  cidr_block = var.public_subnet_1_cidr_block
-  availability_zone = var.availability_zone_1
+  vpc_id                  = aws_vpc.test_vpc.id
+  cidr_block              = var.public_subnet_1_cidr_block
+  availability_zone       = var.availability_zone_1
   map_public_ip_on_launch = true
   tags = {
-    Name = "${var.environment}-public-subnet-1"
+    Name                                        = "${var.environment}-public-subnet-1"
     "kubernetes.io/cluster/${var.cluster_name}" = "shared"
-    "kubernetes.io/role/elb"                   = "1"
+    "kubernetes.io/role/elb"                    = "1"
   }
 }
 
 resource "aws_subnet" "public_subnet_2" {
-  vpc_id     = aws_vpc.test_vpc.id
-  cidr_block = var.public_subnet_2_cidr_block
-  availability_zone = var.availability_zone_2
+  vpc_id                  = aws_vpc.test_vpc.id
+  cidr_block              = var.public_subnet_2_cidr_block
+  availability_zone       = var.availability_zone_2
   map_public_ip_on_launch = true
   tags = {
-    Name = "${var.environment}-public-subnet-2"
+    Name                                        = "${var.environment}-public-subnet-2"
     "kubernetes.io/cluster/${var.cluster_name}" = "shared"
-    "kubernetes.io/role/elb"                   = "1"
+    "kubernetes.io/role/elb"                    = "1"
   }
 }
 
 resource "aws_subnet" "private_subnet_1" {
-  vpc_id     = aws_vpc.test_vpc.id
-  cidr_block = var.private_subnet_1_cidr_block
+  vpc_id            = aws_vpc.test_vpc.id
+  cidr_block        = var.private_subnet_1_cidr_block
   availability_zone = var.availability_zone_1
   tags = {
-    Name = "${var.environment}-private-subnet-1"
+    Name                                        = "${var.environment}-private-subnet-1"
     "kubernetes.io/cluster/${var.cluster_name}" = "shared"
-    "kubernetes.io/role/internal-elb" = "1"
+    "kubernetes.io/role/internal-elb"           = "1"
   }
 }
 
 resource "aws_subnet" "private_subnet_2" {
-  vpc_id     = aws_vpc.test_vpc.id
-  cidr_block = var.private_subnet_2_cidr_block
+  vpc_id            = aws_vpc.test_vpc.id
+  cidr_block        = var.private_subnet_2_cidr_block
   availability_zone = var.availability_zone_2
   tags = {
-    Name = "${var.environment}-private-subnet-2"
+    Name                                        = "${var.environment}-private-subnet-2"
     "kubernetes.io/cluster/${var.cluster_name}" = "shared"
-    "kubernetes.io/role/internal-elb" = "1"
+    "kubernetes.io/role/internal-elb"           = "1"
   }
 }
 

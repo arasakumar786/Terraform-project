@@ -1,7 +1,7 @@
 resource "aws_security_group" "public_sg" {
   name        = "${var.environment}-public_sg"
   description = "Security group for public access"
-  vpc_id      =  var.vpc_id
+  vpc_id      = var.vpc_id
 
   ingress {
     description = "Allow all TCP"

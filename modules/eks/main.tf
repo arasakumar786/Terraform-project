@@ -35,7 +35,7 @@ resource "aws_eks_addon" "coredns" {
   resolve_conflicts_on_update = "OVERWRITE"
 
   depends_on = [
-    aws_eks_node_group.trend_store_production   # coredns pods need nodes to schedule on
+    aws_eks_node_group.trend_store_production # coredns pods need nodes to schedule on
   ]
 }
 

@@ -15,7 +15,7 @@ output "cluster_version" {
 }
 
 output "cluster_certificate_authority" {
-  value = aws_eks_cluster.trend_store_production.certificate_authority[0].data
+  value     = aws_eks_cluster.trend_store_production.certificate_authority[0].data
   sensitive = true
 }
 
