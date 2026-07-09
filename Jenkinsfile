@@ -7,7 +7,7 @@ pipeline {
     }
 
     environment {
-        AWS_CREDS     = credentials('aws-terraform-creds')   // Jenkins credential ID
+        
         TF_DIR        = "environment/${params.ENV}"
         SLACK_CHANNEL = "#all-arasan"
     }
