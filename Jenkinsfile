@@ -6,8 +6,7 @@ pipeline {
         choice(name: 'ACTION', choices: ['plan', 'apply', 'destroy'], description: 'Terraform action')
     }
 
-    environment {
-        
+    environment { 
         TF_DIR        = "environment/${params.ENV}"
         SLACK_CHANNEL = "#all-arasan"
     }
