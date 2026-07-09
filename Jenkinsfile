@@ -56,7 +56,7 @@ pipeline {
                 }
                 }
             }
-        }
+     
         stage('Plan') {
             steps {
                 dir("${TF_DIR}") {
