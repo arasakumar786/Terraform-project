@@ -77,20 +77,12 @@ variable "rds_identifier" {
   description = "The identifier for the RDS instance"
   type        = string
 }
-variable "rds_engine_version" {
-  description = "The engine version for the RDS instance"
-  type        = string
-}
 variable "rds_master_username" {
   description = "The master username for the RDS instance"
   type        = string
 }
 variable "rds_database_name" {
   description = "The name of the database for the RDS instance"
-  type        = string
-}
-variable "rds_identifier" {
-  description = "The identifier for the RDS instance"
   type        = string
 }
 variable "rds_engine_version" {
