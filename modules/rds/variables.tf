@@ -19,6 +19,6 @@ variable "instance_class" {
   type    = string
   default = "db.t3.micro"
 }
-variable "db_password" {
+variable "rds_db_password" {
   type = string
 }
