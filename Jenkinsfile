@@ -7,8 +7,8 @@ pipeline {
     }
 
     environment {
-        AWS_CREDS = credentials('aws-terraform-creds')   // Jenkins credential ID
-        TF_DIR    = "environment/${params.ENV}"
+        AWS_CREDS     = credentials('aws-terraform-creds')   // Jenkins credential ID
+        TF_DIR        = "environment/${params.ENV}"
         SLACK_CHANNEL = "#all-arasan"
     }
 
@@ -49,14 +49,18 @@ pipeline {
                 }
             }
         }
-        stage ('fetch secrets') {
+
+        stage('Fetch Secrets') {
             steps {
                 script {
-                    env.TF_VAR_db_password = sh(script: "aws ssm get-parameter --name /rds/${params.ENV}-mysql/master_password --with-decryption --query Parameter.Value --output text", returnStdout: true).trim()
-                }
+                    env.TF_VAR_db_password = sh(
+                        script: "aws ssm get-parameter --name /rds/${params.ENV}-mysql/master_password --with-decryption --query Parameter.Value --output text",
+                        returnStdout: true
+                    ).trim()
                 }
             }
-     
+        }
+
         stage('Plan') {
             steps {
                 dir("${TF_DIR}") {

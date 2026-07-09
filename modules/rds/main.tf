@@ -19,7 +19,7 @@ resource "aws_db_instance" "mysql" {
   storage_type          = "gp2"
 
   username = var.master_username
-  password = data.aws_ssm_parameter.db_password.value
+  password = var.db_password
 
   db_name = var.database_name
 
