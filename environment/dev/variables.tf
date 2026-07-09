@@ -102,3 +102,8 @@ variable "rds_instance_class" {
   type        = string
 }
 
+variable "rds_db_password" {
+  description = "The password for the RDS database"
+  type        = string
+  sensitive   = true
+}

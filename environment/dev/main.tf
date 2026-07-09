@@ -82,4 +82,5 @@ module "rds" {
   instance_class   = var.rds_instance_class
   master_username  = var.rds_master_username
   database_name    = var.rds_database_name
+  db_password      = var.rds_db_password
 }
