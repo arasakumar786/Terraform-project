@@ -73,11 +73,11 @@ variable "instance_type" {
   description = "The instance type for the EC2 instance"
   type        = string
 }
-variable "identifier" {
+variable "rds_identifier" {
   description = "The identifier for the RDS instance"
   type        = string
 }
-variable "engine_version" {
+variable "rds_engine_version" {
   description = "The engine version for the RDS instance"
   type        = string
 }
