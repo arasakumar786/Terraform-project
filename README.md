@@ -117,6 +117,21 @@ Instead of static AWS access keys, the Jenkins server authenticates via an **EC2
 - **Script path:** `Jenkinsfile`
 - **Trigger:** GitHub hook trigger for GITScm polling (requires a matching webhook configured on the GitHub repo, pointed at `http://<jenkins-host>:8080/github-webhook/`)
 
+### 5. Restrict builds to infrastructure-relevant changes
+
+By default, every push to the repository triggers a build — including changes that have nothing to do with infrastructure, like a README edit. To avoid unnecessary builds, the Jenkins job is configured to only trigger when relevant paths change.
+
+In the job's Pipeline configuration, under the Git SCM's Additional Behaviours, add "Polling ignores commits in certain paths" with:
+
+Included Regions:
+
+environment/.*
+modules/.*
+Jenkinsfile
+
+With this in place, a commit that only touches README.md or other docs will not trigger a build. A commit touching anything under environment/, modules/, or the Jenkinsfile itself will trigger normally via the webhook.
+
+
 ## Running the Pipeline
 
 ### Automatic (on git push)
