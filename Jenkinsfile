@@ -6,7 +6,7 @@ pipeline {
         choice(name: 'ACTION', choices: ['plan', 'apply', 'destroy'], description: 'Terraform action')
     }
 
-    environment { 
+    environment {
         TF_DIR        = "environment/${params.ENV}"
         SLACK_CHANNEL = "#all-arasan"
     }
@@ -52,7 +52,7 @@ pipeline {
         stage('Fetch Secrets') {
             steps {
                 script {
-                    env.TF_VAR_db_password = sh(
+                    env.TF_VAR_rds_db_password = sh(
                         script: "aws ssm get-parameter --name /rds/${params.ENV}-mysql/master_password --with-decryption --query Parameter.Value --output text",
                         returnStdout: true
                     ).trim()
@@ -65,6 +65,16 @@ pipeline {
                 dir("${TF_DIR}") {
                     sh 'terraform plan -var-file=terraform.tfvars -out=tfplan'
                     sh 'terraform show -no-color tfplan > tfplan.txt'
+                    script {
+                        // Pulls the "Plan: X to add, Y to change, Z to destroy." line
+                        // Falls back to "No changes" text if nothing changed
+                        env.PLAN_SUMMARY = sh(
+                            script: """
+                                grep -E '^(Plan:|No changes\\.)' tfplan.txt || echo 'Plan summary not found'
+                            """,
+                            returnStdout: true
+                        ).trim()
+                    }
                 }
             }
         }
@@ -119,7 +129,7 @@ pipeline {
     post {
         success {
             script {
-                def summaryLine = env.PLAN_SUMMARY ? "\n\`\`\`${env.PLAN_SUMMARY}\`\`\`" : ""
+                def summaryLine = env.PLAN_SUMMARY ? "\n```${env.PLAN_SUMMARY}```" : ""
                 slackSend(
                     channel: "${SLACK_CHANNEL}",
                     color: 'good',
