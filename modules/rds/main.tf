@@ -19,8 +19,8 @@ resource "aws_db_instance" "mysql" {
   storage_type          = "gp2"
 
   username = var.master_username
-  password = var.db_password
-
+  password =data.aws_ssm_parameter.db_password.value
+  db_subnet_group_name = aws_db_subnet_group.mysql.name
   db_name = var.database_name
 
   publicly_accessible = false
@@ -32,10 +32,17 @@ resource "aws_db_instance" "mysql" {
   deletion_protection = false
 
   auto_minor_version_upgrade = true
-
   tags = {
     Name = var.identifier
   }
+}
+resource "aws_db_subnet_group" "mysql" {
+  name = "${var.identifier}-subnet-group"
+
+  subnet_ids = [
+    var.private_subnet_ids[0],
+    var.private_subnet_ids[1]
+  ]
 }
 
 
