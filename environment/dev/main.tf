@@ -75,7 +75,7 @@ module "ec2" {
 }
 
 module "rds" {
-  source = "../../modules/rds"
+  source              = "../../modules/rds"
   rds_identifier      = var.rds_identifier
   rds_engine_version  = var.rds_engine_version
   rds_instance_class  = var.rds_instance_class
