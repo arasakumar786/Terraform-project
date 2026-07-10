@@ -1,21 +1,21 @@
-variable "identifier" {
+variable "rds_identifier" {
   type = string
 }
 
-variable "master_username" {
+variable "rds_master_username" {
   type = string
 }
 
-variable "database_name" {
+variable "rds_database_name" {
   type = string
 }
 
-variable "engine_version" {
+variable "rds_engine_version" {
   type    = string
   default = "8.0.39"
 }
 
-variable "instance_class" {
+variable "rds_instance_class" {
   type    = string
   default = "db.t3.micro"
 }

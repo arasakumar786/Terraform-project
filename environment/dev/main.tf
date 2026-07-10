@@ -76,12 +76,11 @@ module "ec2" {
 
 module "rds" {
   source = "../../modules/rds"
-
-  identifier      = var.rds_identifier
-  engine_version  = var.rds_engine_version
-  instance_class  = var.rds_instance_class
-  master_username = var.rds_master_username
-  database_name   = var.rds_database_name
+  rds_identifier      = var.rds_identifier
+  rds_engine_version  = var.rds_engine_version
+  rds_instance_class  = var.rds_instance_class
+  rds_master_username = var.rds_master_username
+  rds_database_name   = var.rds_database_name
   private_subnet_ids = [
     module.vpc.private_subnet_id_1,
     module.vpc.private_subnet_id_2
