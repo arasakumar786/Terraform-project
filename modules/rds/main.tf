@@ -18,10 +18,10 @@ resource "aws_db_instance" "mysql" {
   max_allocated_storage = 20
   storage_type          = "gp2"
 
-  username = var.rds_master_username
-  password = data.aws_ssm_parameter.rds_password.value
+  username             = var.rds_master_username
+  password             = data.aws_ssm_parameter.rds_password.value
   db_subnet_group_name = aws_db_subnet_group.mysql.name
-  db_name = var.rds_database_name
+  db_name              = var.rds_database_name
 
   publicly_accessible = false
   multi_az            = false
