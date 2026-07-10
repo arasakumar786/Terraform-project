@@ -118,17 +118,30 @@ pipeline {
 
     post {
         success {
-            slackSend(
-                channel: "${SLACK_CHANNEL}",
-                color: 'good',
-                message: "✅ Terraform ${params.ACTION} succeeded on *${params.ENV}* — Build #${env.BUILD_NUMBER}"
-            )
+            script {
+                def summaryLine = env.PLAN_SUMMARY ? "\n\`\`\`${env.PLAN_SUMMARY}\`\`\`" : ""
+                slackSend(
+                    channel: "${SLACK_CHANNEL}",
+                    color: 'good',
+                    message: "✅ Terraform ${params.ACTION} succeeded on *${params.ENV}* — Build #${env.BUILD_NUMBER}${summaryLine}\n<${env.BUILD_URL}|View full plan output>"
+                )
+            }
+            // Attach the full plan file so reviewers can open it directly in Slack
+            script {
+                if (fileExists("${TF_DIR}/tfplan.txt")) {
+                    slackUploadFile(
+                        channel: "${SLACK_CHANNEL}",
+                        filePath: "${TF_DIR}/tfplan.txt",
+                        initialComment: "Full Terraform plan output — ${params.ENV}, Build #${env.BUILD_NUMBER}"
+                    )
+                }
+            }
         }
         failure {
             slackSend(
                 channel: "${SLACK_CHANNEL}",
                 color: 'danger',
-                message: "❌ Terraform ${params.ACTION} FAILED on *${params.ENV}* — Build #${env.BUILD_NUMBER}. Check console: ${env.BUILD_URL}"
+                message: "❌ Terraform ${params.ACTION} FAILED on *${params.ENV}* — Build #${env.BUILD_NUMBER}\n<${env.BUILD_URL}console|Check console output>"
             )
         }
         aborted {
